@@ -4,6 +4,7 @@
 #include "defines.hpp"
 #include "MPU9250.hpp"
 
+
 ISR(TCC0_OVF_vect){
     if (!MPU9250::SPI_check()){
         return;

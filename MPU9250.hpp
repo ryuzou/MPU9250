@@ -9,29 +9,30 @@
 
 namespace MPU9250{
 
-    bool FLAG_if_SPI_ConfigHasDone = 0;
+    //region Description
+    extern double ARAW_Accel_dat[3];
+    extern double GRAW_Accel_dat[3];
+    extern double RAW_Gyro_dat[3];
 
-    bool FLAG_if_using_RTGyro;
-    bool FLAG_if_using_RTAccel;
-    bool FLAG_if_using_RTMagnDeg;
+    extern double RAW_Past_Accel_dat[20][3];   //little value is younger.
+    extern double RAW_Past_Gyro_dat[20][3];   //little value is younger.
 
-    double GRAVITY;     //In M/Sec^2
+    extern double _RT_Gyro_DPS[3];
+    extern long double _RT_Gyro_Deg[3];
+    extern long double _RT_Gyro_Rad[3];
 
-    int FLAG_GRAVITY_Update_timing;
-    int VGRAVITY_Update_timing;
+    extern bool FLAG_if_using_RTGyro;
+    extern bool FLAG_if_using_RTAccel;
+    extern bool FLAG_if_using_RTMagnDeg;
 
-    double ARAW_Accel_dat[3];
-    double GRAW_Accel_dat[3];
-    double RAW_Gyro_dat[3];
+    extern double GRAVITY;     //In M/Sec^2
 
-    double RAW_Past_Accel_dat[20][3];   //little value is younger.
-    double RAW_Past_Gyro_dat[20][3];   //little value is younger.
+    extern int FLAG_GRAVITY_Update_timing;
+    extern int VGRAVITY_Update_timing;
+    extern int MDatUpdateSEC;
 
-    double _RT_Gyro_DPS[3];
-    long double _RT_Gyro_Deg[3];
-    long double _RT_Gyro_Rad[3];
-
-    int MDatUpdateSEC;
+    extern bool FLAG_if_SPI_ConfigHasDone;
+    //endregion
 
     bool SPI_Config();
 

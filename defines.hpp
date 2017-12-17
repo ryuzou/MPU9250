@@ -32,37 +32,14 @@
 #define MPU9250_SPI_CSPIN PIN0_bm
 
 
-void SOFT_RESET(){
-    RST.CTRL = RST_SWRST_bm;
-}
+void SOFT_RESET();
 
-void delay_us(int us){
-    while(us){
-        _delay_us(1);
-        us--;
-    }
-}
+void delay_us(int us);
 
-void delay_ms(int ms){
-    while(ms){
-        _delay_us(1);
-        ms--;
-    }
-}
+void delay_ms(int ms);
 
-void FreqTo32(void){
-    OSC.CTRL |= 0x02;
-    while ((OSC.STATUS & 0x02) == 0);
-    CPU_CCP = 0xD8;
-    CLK.CTRL = 0x01;
-    CLK.PSCTRL = CLK_PSADIV0_bm;
-    OSC.CTRL &= 0xFE;
-}
+void FreqTo32(void);
 
-char *inoch(int val) {
-    char s[128] = {0};
-    sprintf(s, "%d", val);
-    return s;
-}
+char *inoch(int val);
 
 #endif //MPU9250_DEFINES_HPP

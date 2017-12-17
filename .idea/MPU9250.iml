@@ -7,8 +7,12 @@
       <sourceFolder url="file://$MODULE_DIR$/SPI.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/INTERRUPTS.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/defines.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/usart_xmega.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MPU9250.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/SPI.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/defines.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/usart_xmega.hpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
