@@ -21,9 +21,13 @@ namespace MPU9250{
     extern long double _RT_Gyro_Deg[3];
     extern long double _RT_Gyro_Rad[3];
 
+    extern double _RT_Accel_MPS[3];
+    extern long double _RT_ACCEL_M[3];
+
     extern bool FLAG_if_using_RTGyro;
     extern bool FLAG_if_using_RTAccel;
     extern bool FLAG_if_using_RTMagnDeg;
+    extern bool FLAG_if__GET_RAW_Dat__Has_Been_Used;
 
     extern double GRAVITY;     //In M/Sec^2
 
@@ -57,6 +61,8 @@ namespace MPU9250{
     void _RESET_RT_Gyro();
 
     void _RT_Gyro();
+
+    void _RT_Accel();
 }
 
 #endif //MPU9250_MPU9250_HPP

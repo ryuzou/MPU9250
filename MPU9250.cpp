@@ -6,10 +6,12 @@
 #include "MPU9250.hpp"
 #include "SPI.hpp"
 
+#define DatFLAG_OFF() (FLAG_if__GET_RAW_Dat__Has_Been_Used = 0)
+
 namespace MPU9250{
 
     double ARAW_Accel_dat[3];
-    double GRAW_Accel_dat[3];
+    double GRAW_Accel_dat[3];   //Normaly use this
     double RAW_Gyro_dat[3];
 
     double RAW_Past_Accel_dat[20][3];   //little value is younger.
@@ -19,9 +21,13 @@ namespace MPU9250{
     long double _RT_Gyro_Deg[3];
     long double _RT_Gyro_Rad[3];
 
+    double _RT_Accel_MPS[3];
+    long double _RT_ACCEL_M[3];
+
     bool FLAG_if_using_RTGyro;
     bool FLAG_if_using_RTAccel;
     bool FLAG_if_using_RTMagnDeg;
+    bool FLAG_if__GET_RAW_Dat__Has_Been_Used;
 
     double GRAVITY;     //In M/Sec^2
 
@@ -39,6 +45,7 @@ namespace MPU9250{
     }
 
     void ResetValue(){
+        FLAG_if__GET_RAW_Dat__Has_Been_Used = 0;
         FLAG_if_SPI_ConfigHasDone = 0;
         FLAG_if_using_RTAccel = 0;
         FLAG_if_using_RTGyro = 0;
@@ -150,20 +157,43 @@ namespace MPU9250{
         _START_RT_Gyro();
     }
 
-    void _RT_Gyro(){ //TODO
+    void _RT_Gyro(){
+        if (FLAG_if__GET_RAW_Dat__Has_Been_Used != 1)
+            Get_RAW_Dat();
         for (int i = 0; i < 20; ++i) {
             for (int j = 0; j < 3; ++j) {
                 RAW_Past_Gyro_dat[i][j] = RAW_Past_Gyro_dat[i + 1][j];
             }
         }
-        Get_RAW_Dat();
+
         for (int k = 0; k < 3; ++k) {
             RAW_Past_Gyro_dat[0][k] = RAW_Gyro_dat[k];
 
         }
         for (int l = 0; l < 3; ++l) {
             _RT_Gyro_DPS[l] = RAW_Gyro_dat[l];
-            _RT_Gyro_Deg[l] += (_RT_Gyro_DPS[l] * (double) MDatUpdateSEC) / (double) 1000;
+            _RT_Gyro_Deg[l] += ((_RT_Gyro_DPS[l] * 0.05 + RAW_Past_Gyro_dat[19][l] * 0.95) * (double) MDatUpdateSEC) / (double) 1000;
         }
+        DatFLAG_OFF();
+    }
+
+    void _RT_Accel(){
+        if (FLAG_if__GET_RAW_Dat__Has_Been_Used != 1)
+            Get_RAW_Dat();
+        for (int i = 0; i < 20; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                RAW_Past_Accel_dat[i][j] = RAW_Past_Accel_dat[i + 1][j];
+            }
+        }
+
+        for (int k = 0; k < 3; ++k) {
+            RAW_Past_Accel_dat[0][k] = GRAW_Accel_dat[k];
+
+        }
+        for (int l = 0; l < 3; ++l) {
+            _RT_Accel_MPS[l] = GRAW_Accel_dat[l];
+            _RT_ACCEL_M[l] += ((_RT_Accel_MPS[l] * 0.05 + RAW_Past_Gyro_dat[19][l] * 0.95) * (double) MDatUpdateSEC) / (double) 1000;
+        }
+        DatFLAG_OFF();
     }
 }
