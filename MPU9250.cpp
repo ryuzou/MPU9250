@@ -134,9 +134,9 @@ namespace MPU9250{
         if (!FLAG_if_SPI_ConfigHasDone)
             Config();
         PMIC.CTRL = PMIC_HILVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_LOLVLEN_bm;
-        TCC0.CTRLA = TC_CLKSEL_DIV4_gc;
+        TCC0.CTRLA = TC_CLKSEL_DIV8_gc;
         TCC0.CTRLB = TC_WGMODE_NORMAL_gc;
-        TCC0.PER = 4 * MDatUpdateSEC;
+        TCC0.PER = 4000 * MDatUpdateSEC;
         FLAG_if_using_RTGyro = 1;
         for (int i = 0; i < 3; ++i) {
             _RT_Gyro_DPS[i] = 0;
@@ -163,7 +163,7 @@ namespace MPU9250{
         }
         for (int l = 0; l < 3; ++l) {
             _RT_Gyro_DPS[l] = RAW_Gyro_dat[l];
-            _RT_Gyro_Deg[l] += (_RT_Gyro_DPS[l] * (double) MDatUpdateSEC) / (double) 10000;
+            _RT_Gyro_Deg[l] += (_RT_Gyro_DPS[l] * (double) MDatUpdateSEC) / (double) 1000;
         }
     }
 }
